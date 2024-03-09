@@ -14,7 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/user")
+@RequestMapping("/users")
 public class UserController {
     private final UserService userService;
 
@@ -27,21 +27,24 @@ public class UserController {
     public User signup(
             @RequestBody SignupRequestDto signupRequestDto
     ) throws UserAlreadyExistException {
-        return userService.signup(signupRequestDto);
+        return userService.signup(
+                signupRequestDto.getEmail(),
+                signupRequestDto.getPassword(),
+                signupRequestDto.getName()
+        );
     }
 
-    @GetMapping("/login")
+    @PostMapping("/login")
     public Token login(
             @RequestBody LoginRequestDto loginRequestDto
     ) throws UserNotFoundException, InvalidCredentialsException {
-        return userService.login(loginRequestDto);
+        return userService.login(loginRequestDto.getEmail(), loginRequestDto.getPassword());
     }
 
-    @DeleteMapping("/logout")
+    @PostMapping("/logout")
     public Token logout(
             @RequestBody LogoutRequestDto logoutRequestDto
     ) throws InvalidTokenException {
-        return userService.logout(logoutRequestDto);
+        return userService.logout(logoutRequestDto.getToken());
     }
-
 }

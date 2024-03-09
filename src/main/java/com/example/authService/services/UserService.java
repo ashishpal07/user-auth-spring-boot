@@ -1,8 +1,5 @@
 package com.example.authService.services;
 
-import com.example.authService.dtos.LoginRequestDto;
-import com.example.authService.dtos.LogoutRequestDto;
-import com.example.authService.dtos.SignupRequestDto;
 import com.example.authService.exception.InvalidCredentialsException;
 import com.example.authService.exception.InvalidTokenException;
 import com.example.authService.exception.UserAlreadyExistException;
@@ -11,9 +8,9 @@ import com.example.authService.models.Token;
 import com.example.authService.models.User;
 
 public interface UserService {
-    public Token login(LoginRequestDto loginRequestDto) throws UserNotFoundException, InvalidCredentialsException;
+    Token login(String email, String password) throws UserNotFoundException, InvalidCredentialsException;
 
-    public User signup(SignupRequestDto signupRequestDto) throws UserAlreadyExistException;
+    User signup(String email, String password, String name) throws UserAlreadyExistException;
 
-    public Token logout(LogoutRequestDto logoutRequestDto) throws InvalidTokenException;
+    Token logout(String token) throws InvalidTokenException;
 }
